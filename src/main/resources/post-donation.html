@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post New Donation | Food Connect</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .donor-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        
+        .nav-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .floating-label {
+            transform: translateY(-1.5rem) scale(0.85);
+            transform-origin: left top;
+        }
+        
+        select:required:invalid {
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="nav-gradient shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full donor-gradient flex items-center justify-center text-white font-bold">
+                            FC
+                        </div>
+                        <span class="text-2xl font-bold text-gray-800">Post a New Donation</span>
+                    </div>
+                </div>
+                
+                <div class="flex items-center">
+                    <a th:href="@{/donor/dashboard}"
+                       class="px-5 py-2.5 bg-gray-100 text-gray-700 text-sm font-semibold rounded-xl
+                              shadow-sm hover:bg-gray-200 hover:shadow-md transition-all duration-300
+                              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-3">Post a New Donation</h1>
+            <p class="text-gray-600">Share your surplus food with care homes in need</p>
+            <div class="w-24 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full mt-4"></div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card-gradient rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <!-- Error Message -->
+                <div th:if="${param.error}" 
+                     class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-xl shadow-sm" 
+                     role="alert">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-red-700 font-medium">There was an error posting your donation. Please try again.</span>
+                    </div>
+                </div>
+
+                <!-- Form Header -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900">Donation Details</h3>
+                    <p class="mt-2 text-gray-600">
+                        Fill in the details of the food you wish to donate. Your contribution helps reduce food waste and support communities.
+                    </p>
+                </div>
+
+                <!-- Donation Form -->
+                <form th:action="@{/donor/post}" th:object="${donation}" method="post" class="space-y-8">
+                    <!-- Food Type Field -->
+                    <div class="relative">
+                        <select id="foodType" 
+                                th:field="*{foodType}" 
+                                required
+                                class="peer block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm 
+                                       focus:outline-none input-focus focus:border-indigo-500 transition-colors
+                                       appearance-none bg-white">
+                            <option value="" disabled selected class="text-gray-400">Select a category...</option>
+                            <option value="Cooked Meals" class="text-gray-700">Cooked Meals (e.g., rice, curry, pasta)</option>
+                            <option value="Vegetables/Fruits" class="text-gray-700">Vegetables / Fruits (Fresh)</option>
+                            <option value="Bakery/Grains" class="text-gray-700">Bakery / Grains (e.g., bread, rice bags)</option>
+                            <option value="Dairy/Packaged" class="text-gray-700">Dairy / Packaged (e.g., milk, canned goods)</option>
+                            <option value="Other" class="text-gray-700">Other</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <label for="foodType" 
+                               class="absolute left-4 top-3 text-gray-500 text-sm transition-all 
+                                      peer-focus:text-sm peer-focus:text-indigo-600 
+                                      peer-focus:top-1 peer-focus:font-medium pointer-events-none
+                                      peer-focus:floating-label">
+                            Food Type
+                        </label>
+                    </div>
+
+                    <!-- Quantity Field -->
+                    <div class="relative">
+                        <input type="text" 
+                               id="quantity" 
+                               th:field="*{quantity}" 
+                               required
+                               placeholder=" "
+                               class="peer block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm 
+                                      placeholder-transparent focus:outline-none input-focus
+                                      focus:border-indigo-500 transition-colors">
+                        <label for="quantity" 
+                               class="absolute left-4 top-3 text-gray-500 text-sm transition-all 
+                                      peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 
+                                      peer-placeholder-shown:top-3 peer-focus:text-sm peer-focus:text-indigo-600 
+                                      peer-focus:top-1 peer-focus:font-medium pointer-events-none
+                                      peer-focus:floating-label">
+                            Quantity (e.g., '5 large trays', '20 lbs', '50 packets')
+                        </label>
+                    </div>
+
+                    <!-- Pickup Time Field -->
+                    <div class="relative">
+                        <input type="datetime-local" 
+                               id="pickupTime" 
+                               th:field="*{pickupTime}" 
+                               required
+                               class="peer block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm 
+                                      focus:outline-none input-focus focus:border-indigo-500 transition-colors">
+                        <label for="pickupTime" 
+                               class="absolute left-4 top-3 text-gray-500 text-sm transition-all 
+                                      peer-focus:text-sm peer-focus:text-indigo-600 
+                                      peer-focus:top-1 peer-focus:font-medium pointer-events-none
+                                      peer-focus:floating-label">
+                            Must be Picked up By (Date and Time)
+                        </label>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="pt-6 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a th:href="@{/donor/dashboard}"
+                           class="px-6 py-3 bg-white border border-gray-300 text-gray-700 
+                                  text-sm font-semibold rounded-xl shadow-sm hover:bg-gray-50 
+                                  hover:shadow-md transition-all duration-300
+                                  focus:outline-none focus:ring-2 focus:ring-offset-2 
+                                  focus:ring-gray-500 flex items-center justify-center order-2 sm:order-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Cancel
+                        </a>
+                        <button type="submit" 
+                                class="px-6 py-3 donor-gradient text-white text-sm font-semibold rounded-xl 
+                                       shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5
+                                       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                                       flex items-center justify-center order-1 sm:order-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                            Post Donation
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Decorative Gradient Bar -->
+            <div class="h-2 donor-gradient"></div>
+        </div>
+
+        <!-- Help Text -->
+        <div class="mt-8 text-center">
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl shadow-sm">
+                <div class="flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                    <p class="text-sm text-blue-700">
+                        <strong>Tip:</strong> Be specific about quantity and set a realistic pickup time to help care homes plan accordingly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

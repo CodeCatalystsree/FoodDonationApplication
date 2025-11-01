@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Connect | Welcome</title>
+    <!-- Load Tailwind CSS via CDN for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font and gradient background */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #4ade80 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .donor-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        
+        .home-gradient {
+            background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="card-gradient p-8 md:p-12 rounded-3xl shadow-2xl max-w-2xl w-full transform transition duration-500 hover:shadow-3xl">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-10">
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-2xl">
+                    FC
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">
+                <span class="hero-gradient">Food Connect</span>
+            </h1>
+            
+            <p class="text-xl text-gray-600 mb-2">
+                Bridging surplus food with homes in need.
+            </p>
+            <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-blue-500 mx-auto rounded-full"></div>
+        </div>
+        
+        <!-- Mission Statement -->
+        <div class="bg-blue-50 p-6 rounded-2xl mb-10 border border-blue-100">
+            <p class="text-center text-blue-700 font-medium">
+                <span class="text-2xl mr-2">🍽️</span>
+                Connecting generous food donors with old age homes and children care centers
+            </p>
+        </div>
+
+        <!-- User Selection Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">
+                Tell us who you are:
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Donor Button -->
+                <a href="/donor/login" class="block">
+                    <div class="h-full rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                        <div class="donor-gradient p-1">
+                            <div class="bg-white p-6 rounded-xl h-full flex flex-col items-center">
+                                <div class="icon-container bg-indigo-100 text-indigo-600 pulse-animation">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Food Donor</h3>
+                                <p class="text-gray-600 text-center mb-4">Restaurants, caterers, or individuals with surplus food</p>
+                                <button class="w-full py-3 px-6 donor-gradient text-white font-bold text-lg rounded-xl transition duration-300">
+                                    Login as Donor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Home Button -->
+                <a href="/home/login" class="block">
+                    <div class="h-full rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                        <div class="home-gradient p-1">
+                            <div class="bg-white p-6 rounded-xl h-full flex flex-col items-center">
+                                <div class="icon-container bg-orange-100 text-orange-600 pulse-animation">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Care Home</h3>
+                                <p class="text-gray-600 text-center mb-4">Old age homes, orphanages, or children care centers</p>
+                                <button class="w-full py-3 px-6 home-gradient text-white font-bold text-lg rounded-xl transition duration-300">
+                                    Login as Home
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
