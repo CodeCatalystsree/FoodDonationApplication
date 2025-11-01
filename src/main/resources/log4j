@@ -1,0 +1,55 @@
+<!--  
+  This is the Log4j 2 configuration file.
+  It sets up two "appenders": one for the console and one for a file.
+ -->
+<Configuration status="WARN">
+<!--  Define variables to be used in the configuration  -->
+<Properties>
+<Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+<Property name="LOG_DIR">logs</Property>
+</Properties>
+<Appenders>
+<!--  1. Console Appender  -->
+<!--  This appender writes logs to the System.out (your console)  -->
+<Console name="Console" target="SYSTEM_OUT">
+<PatternLayout pattern="${LOG_PATTERN}"/>
+</Console>
+<!--  2. Rolling File Appender  -->
+<!--  This appender writes logs to a file in the 'logs' directory  -->
+<RollingFile name="File" fileName="${LOG_DIR}/app.log" filePattern="${LOG_DIR}/app-%d{yyyy-MM-dd}-%i.log.gz">
+<PatternLayout pattern="${LOG_PATTERN}"/>
+<Policies>
+<!--  Create a new log file when the current one reaches 10MB  -->
+<SizeBasedTriggeringPolicy size="10 MB"/>
+</Policies>
+<!--  Keep a maximum of 10 archived log files before deleting old ones  -->
+<DefaultRolloverStrategy max="10"/>
+</RollingFile>
+</Appenders>
+<Loggers>
+<!--  
+          Logger for YOUR application's code (com.hackathon.donation).
+          We set the level to "debug" to see all your custom messages.
+          It writes to both the Console and the File.
+         -->
+<Logger name="com.hackathon.donation" level="debug" additivity="false">
+<AppenderRef ref="Console"/>
+<AppenderRef ref="File"/>
+</Logger>
+<!--  
+          Logger for all Spring Framework code.
+          We set this to "info" to reduce the noise from Spring itself.
+         -->
+<Logger name="org.springframework" level="info" additivity="false">
+<AppenderRef ref="Console"/>
+<AppenderRef ref="File"/>
+</Logger>
+<!--  
+          Root Logger (the default for all other libraries).
+          We set this to "warn" to only see important warnings or errors.
+         -->
+<Root level="warn">
+<AppenderRef ref="Console"/>
+</Root>
+</Loggers>
+</Configuration>
